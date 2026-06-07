@@ -1242,6 +1242,49 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <div class="dbchip" id="dbc-rider" onclick="switchDB('rider',this)"><i class="ti ti-motorbike"></i><div class="dcl">Data Rider</div><div class="dcn" id="dbn-rider">0</div></div>
       </div>
       <div id="db-content"></div>
+
+      <!-- RESET DATA BULANAN -->
+      <div style="margin-top:16px;background:#FFF7ED;border:1.5px solid #FCD34D;border-radius:14px;overflow:hidden">
+        <div style="padding:12px 14px;background:#FEF3C7;border-bottom:1px solid #FCD34D;display:flex;align-items:center;gap:8px">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#92400E" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <span style="font-size:13px;font-weight:800;color:#92400E">Reset Data Aktivitas</span>
+        </div>
+        <div style="padding:12px 14px">
+          <div style="font-size:12px;color:#78350F;margin-bottom:10px;line-height:1.6">
+            Hapus data aktivitas yang lebih dari <strong>30 hari</strong>. Data permanen (buyer, rider, outlet, tarif) tidak akan terhapus.
+          </div>
+          <!-- Info yang akan dihapus -->
+          <div style="background:#fff;border-radius:10px;padding:10px 12px;margin-bottom:12px;font-size:11px">
+            <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #F5F4EF">
+              <span>✅ Order > 30 hari</span><span id="reset-count-order" style="color:var(--rd);font-weight:700">— item</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #F5F4EF">
+              <span>✅ Chat history > 30 hari</span><span id="reset-count-chat" style="color:var(--rd);font-weight:700">— item</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #F5F4EF">
+              <span>✅ Absensi > 30 hari</span><span id="reset-count-absen" style="color:var(--rd);font-weight:700">— item</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #F5F4EF">
+              <span style="color:var(--t2)">❌ Data Buyer</span><span style="color:#10B981;font-weight:700">Tidak dihapus</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #F5F4EF">
+              <span style="color:var(--t2)">❌ Data Rider</span><span style="color:#10B981;font-weight:700">Tidak dihapus</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:4px 0">
+              <span style="color:var(--t2)">❌ Outlet, Tarif, Zona</span><span style="color:#10B981;font-weight:700">Tidak dihapus</span>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button onclick="hitungDataLama()" style="flex:1;padding:9px;background:#fff;border:1.5px solid #FCD34D;border-radius:10px;font-size:12px;font-weight:700;color:#92400E;cursor:pointer">
+              🔍 Hitung Data Lama
+            </button>
+            <button onclick="resetDataLama()" id="btn-reset-data" style="flex:1;padding:9px;background:linear-gradient(135deg,#EF4444,#DC2626);color:#fff;border:none;border-radius:10px;font-size:12px;font-weight:800;cursor:pointer;opacity:.5" disabled>
+              🗑️ Hapus Sekarang
+            </button>
+          </div>
+          <div id="reset-status" style="font-size:11px;color:var(--t2);margin-top:8px;text-align:center"></div>
+        </div>
+      </div>
     </div>
     <div id="at-outlet" class="tc">
       <div class="stitle" style="margin-top:0"><i class="ti ti-building-store" style="color:var(--pu)"></i>Daftarkan Outlet</div>
@@ -4873,6 +4916,141 @@ async function doAbsen(type){
   toast(r.nama.split(' ')[0]+' absen '+(type==='masuk'?'masuk':'pulang')+': '+t);
 }
 
+
+
+// ===== RESET DATA LAMA (> 30 hari) =====
+let _dataLama = {orders:[], chats:[]};
+
+async function hitungDataLama(){
+  const statusEl = document.getElementById('reset-status');
+  const btnReset = document.getElementById('btn-reset-data');
+  if(statusEl) statusEl.textContent = '⏳ Menghitung data lama...';
+
+  const batas = new Date();
+  batas.setDate(batas.getDate() - 30);
+  const batasISO = batas.toISOString();
+
+  // Hitung order lama
+  const orderLama = ORDERS.filter(o => o.createdAt && o.createdAt < batasISO);
+  _dataLama.orders = orderLama.map(o => o.id);
+
+  // Update counter
+  const coEl = document.getElementById('reset-count-order');
+  const ccEl = document.getElementById('reset-count-chat');
+  const caEl = document.getElementById('reset-count-absen');
+
+  if(coEl) coEl.textContent = orderLama.length + ' item';
+
+  // Hitung absensi lama dari rider
+  let absenCount = 0;
+  RIDERS.forEach(r => {
+    if(r.absenDate) {
+      const absenDate = new Date(r.absenDate.split('/').reverse().join('-'));
+      if(absenDate < batas) absenCount++;
+    }
+  });
+  if(caEl) caEl.textContent = absenCount + ' item';
+
+  // Hitung chat lama dari Firestore (kalau ada)
+  let chatCount = 0;
+  if(useF && orderLama.length > 0){
+    try{
+      // Estimasi: tiap order lama punya chat
+      chatCount = orderLama.length;
+    }catch(e){}
+  }
+  if(ccEl) ccEl.textContent = chatCount + ' item (estimasi)';
+
+  const total = orderLama.length + chatCount + absenCount;
+  if(statusEl){
+    statusEl.textContent = total > 0
+      ? `Ditemukan ${total} data lama siap dihapus`
+      : 'Tidak ada data lama (semua masih dalam 30 hari)';
+    statusEl.style.color = total > 0 ? '#EF4444' : '#10B981';
+  }
+
+  if(btnReset){
+    btnReset.disabled = total === 0;
+    btnReset.style.opacity = total > 0 ? '1' : '.5';
+  }
+}
+
+async function resetDataLama(){
+  if(!confirm('Hapus semua data aktivitas lebih dari 30 hari?\n\nTindakan ini tidak bisa dibatalkan!')) return;
+
+  const statusEl = document.getElementById('reset-status');
+  const btnReset = document.getElementById('btn-reset-data');
+  if(statusEl) statusEl.textContent = '⏳ Sedang menghapus...';
+  if(btnReset) btnReset.disabled = true;
+
+  const batas = new Date();
+  batas.setDate(batas.getDate() - 30);
+  const batasISO = batas.toISOString();
+
+  let hapusCount = 0;
+
+  // 1. Hapus order lama
+  const orderLama = ORDERS.filter(o => o.createdAt && o.createdAt < batasISO);
+  if(useF){
+    for(const o of orderLama){
+      try{
+        // Hapus chat order dulu
+        const chatSnap = await db.collection('chats').doc(o.id)
+          .collection('messages').get();
+        for(const doc of chatSnap.docs){
+          await doc.ref.delete();
+        }
+        await db.collection('chats').doc(o.id).delete().catch(()=>{});
+        // Hapus order
+        await db.collection('orders').doc(o.id).delete();
+        hapusCount++;
+      }catch(e){console.warn('Gagal hapus order:', o.id, e);}
+    }
+  }
+  // Hapus dari local state
+  ORDERS = ORDERS.filter(o => !orderLama.find(x => x.id === o.id));
+
+  // 2. Reset absensi lama dari rider
+  let absenReset = 0;
+  for(const r of RIDERS){
+    if(r.absenDate){
+      const absenDate = new Date(r.absenDate.split('/').reverse().join('-'));
+      if(absenDate < batas){
+        r.absenMasuk = null;
+        r.absenPulang = null;
+        r.absenDate = null;
+        if(useF){
+          try{
+            await db.collection('riders').doc(r.id).update({
+              absenMasuk: null,
+              absenPulang: null,
+              absenDate: null
+            });
+            absenReset++;
+          }catch(e){}
+        }
+      }
+    }
+  }
+
+  // Reset counter display
+  ['reset-count-order','reset-count-chat','reset-count-absen'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.textContent = '0 item';
+  });
+
+  if(statusEl){
+    statusEl.textContent = `✅ Selesai! ${hapusCount} order & chat + ${absenReset} absensi dihapus`;
+    statusEl.style.color = '#10B981';
+  }
+  if(btnReset){
+    btnReset.disabled = true;
+    btnReset.style.opacity = '.5';
+  }
+
+  renderAll();
+  toast('Data lama berhasil dibersihkan!');
+}
 
 // ===== HAPUS BUYER & RIDER =====
 async function hapusBuyer(bid, nama){
