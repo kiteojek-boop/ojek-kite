@@ -17,10 +17,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://ojek-kite-ketapang.netlify.app">
 <meta name="description" content="Ojek online lokal — antar cepat, sampai tepat">
-<link rel="manifest" href="/manifest.json">
-<link rel="apple-touch-icon" href="/icons/icon-192.png">
-<link rel="apple-touch-icon" sizes="152x152" href="/icons/icon-152.png">
-<link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144.png">
+<link rel="manifest" href="manifest.json">
 <!-- Apple Touch Icon (inline via data URI) -->
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjggMTI4Ij48cmVjdCB3aWR0aD0iMTI4IiBoZWlnaHQ9IjEyOCIgcng9IjI0IiBmaWxsPSIjMUQ5RTc1Ii8+PHRleHQgeT0iLjllbSIgZm9udC1zaXplPSI4MHB4IiB4PSI1MCUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPvCfkajwn5GpPC90ZXh0Pjwvc3ZnPg==">
 <title>Ojek Kite</title>
@@ -389,6 +386,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .opi-kat{font-size:11px;color:var(--t2);margin-top:1px}
 .opi-chk{width:24px;height:24px;border-radius:50%;border:2px solid var(--br);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0;background:transparent}
 .outlet-pilih-item.sel .opi-chk{background:var(--g);border-color:var(--g)}
+
+
+/* ===== VALIDASI NOMOR HP ===== */
+.hp-wrap{position:relative}
+.hp-wrap input{padding-right:36px}
+.hp-indicator{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:16px;display:none}
+.hp-msg{font-size:10px;margin-top:4px;display:none;font-weight:600}
+.hp-msg.valid{color:#10B981;display:block}
+.hp-msg.invalid{color:#EF4444;display:block}
+.hp-input.valid{border-color:#10B981 !important;background:#F0FDF4 !important}
+.hp-input.invalid{border-color:#EF4444 !important;background:#FEF2F2 !important}
 
 /* ===== TAGIHAN BOX BUYER ===== */
 .tagihan-box{background:#F8FAFF;border:1.5px solid #C7D2FE;border-radius:12px;padding:12px 14px;margin:8px 0}
@@ -815,7 +823,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="asub">Buat akun buyer</div>
     <div class="fr"><label>Nama Lengkap</label><input type="text" id="rnama" placeholder="Nama lengkap"></div>
     <div class="fr"><label>Email</label><input type="email" id="remail" placeholder="nama@email.com"></div>
-    <div class="fr"><label>No. HP / WA</label><input type="tel" id="rhp" placeholder="+62..." maxlength="16"></div>
+    <div class="fr"><label>No. HP / WA</label><input type="tel" id="rhp" placeholder="0812-3456-7890" maxlength="16"></div>
     <div class="fr"><label>Password</label><input type="password" id="rpw" placeholder="Min. 6 karakter"></div>
     <div class="fr"><label>Konfirmasi Password</label><input type="password" id="rpw2" placeholder="Ulangi password"></div>
     <div id="rerr" style="font-size:12px;color:var(--rd);margin-bottom:10px;display:none"></div>
@@ -1051,7 +1059,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
                 <div class="po-label">Tunai</div>
                 <div class="po-sub">Bayar ke rider</div>
               </div>
-              <div class="pay-opt" id="payopt-qris" onclick="pilihMetodeBayar('qris')" style="display:none">
+              <div class="pay-opt" id="payopt-qris" onclick="pilihMetodeBayar('qris')">
                 <span class="po-ikon">📱</span>
                 <div class="po-label">QRIS</div>
                 <div class="po-sub">Scan QR Code</div>
@@ -1270,7 +1278,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
           </div>
           <div style="font-size:11px;color:var(--t3);margin-top:4px">Geser peta untuk atur posisi PIN outlet</div>
         </div>
-        <div class="fr"><label>No. WA</label><input type="tel" id="othp" placeholder="+62..."></div>
+        <div class="fr"><label>No. WA</label><input type="tel" id="othp" placeholder="0812-3456-7890"></div>
         <div style="background:#F0F4FF;border-radius:10px;padding:12px;margin-bottom:10px">
           <div style="font-size:11px;font-weight:700;color:var(--g);margin-bottom:8px">📍 Lokasi Outlet</div>
           <div class="zona-row">
@@ -1520,7 +1528,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <div class="card">
         <div class="fr"><label>Nama Lengkap</label><input type="text" id="rnnam" placeholder="Nama rider"></div>
         <div class="fr"><label>Email Login Rider</label><input type="email" id="rnemail" placeholder="rider@email.com"></div>
-        <div class="fr"><label>No. HP / WA</label><input type="tel" id="rnhp" placeholder="+62..."></div>
+        <div class="fr"><label>No. HP / WA</label><input type="tel" id="rnhp" placeholder="0812-3456-7890"></div>
         <div class="fr"><label>Password Login</label><input type="password" id="rnpw" placeholder="Buat password"></div>
         <div class="fr"><label>Nomor Polisi</label><input type="text" id="rnnopol" placeholder="KB 0000 XX"></div>
         <!-- ZONA WILAYAH — sinkron dari data tarif -->
@@ -1599,7 +1607,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <input type="hidden" id="eb-id">
   <div class="fr"><label>Nama Lengkap</label><input type="text" id="eb-nama" placeholder="Nama lengkap"></div>
   <div class="fr"><label>Email</label><input type="email" id="eb-email" placeholder="email@contoh.com"></div>
-  <div class="fr"><label>No. HP / WA</label><input type="tel" id="eb-hp" placeholder="+62..."></div>
+  <div class="fr"><label>No. HP / WA</label><input type="tel" id="eb-hp" placeholder="0812-3456-7890"></div>
   <div class="fr"><label>Password Baru <span style="font-weight:400;color:var(--t3)">(kosongkan jika tidak diubah)</span></label><input type="password" id="eb-pw" placeholder="Password baru..."></div>
   <div id="eb-err" style="font-size:12px;color:var(--rd);margin-bottom:8px;display:none"></div>
   <div class="mact">
@@ -1615,7 +1623,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <input type="hidden" id="er-uid">
   <div class="fr"><label>Nama Lengkap</label><input type="text" id="er-nama" placeholder="Nama lengkap"></div>
   <div class="fr"><label>Email</label><input type="email" id="er-email" placeholder="email@contoh.com"></div>
-  <div class="fr"><label>No. HP / WA</label><input type="tel" id="er-hp" placeholder="+62..."></div>
+  <div class="fr"><label>No. HP / WA</label><input type="tel" id="er-hp" placeholder="0812-3456-7890"></div>
   <div class="fr"><label>Nomor Polisi</label><input type="text" id="er-nopol" placeholder="KB 0000 XX"></div>
   <div style="background:#F0F4FF;border-radius:10px;padding:12px;margin-bottom:10px">
     <div style="font-size:11px;font-weight:700;color:var(--g);margin-bottom:8px">📍 Zona Awal Rider</div>
@@ -1799,9 +1807,9 @@ self.addEventListener('fetch',e=>{
 });`;
 
 if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('/sw.js',{scope:'/'})
-    .then(reg=>console.log('SW registered:', reg.scope))
-    .catch(e=>console.log('SW error:',e));
+  const blob=new Blob([SW_CODE],{type:'application/javascript'});
+  const url=URL.createObjectURL(blob);
+  navigator.serviceWorker.register(url,{scope:'/'}).then(()=>console.log('SW registered')).catch(e=>console.log('SW:',e));
 }
 
 // PWA install prompt
@@ -1844,8 +1852,9 @@ const MANIFEST={
     {src:'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5NiA5NiI+PHJlY3Qgd2lkdGg9Ijk2IiBoZWlnaHQ9Ijk2IiByeD0iMjAiIGZpbGw9IiMzQjVCREIiLz48dGV4dCB5PSIuOWVtIiBmb250LXNpemU9IjYwcHgiIHg9IjUwJSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+8J+PjTwvdGV4dD48L3N2Zz4=',sizes:'96x96',type:'image/svg+xml',purpose:'any'}
   ]
 };
-// Manifest sudah di manifest.json — tidak perlu dynamic creation
-console.log('Ojek Kite PWA ready');
+const mBlob=new Blob([JSON.stringify(MANIFEST)],{type:'application/json'});
+const mUrl=URL.createObjectURL(mBlob);
+const mLink=document.createElement('link');mLink.rel='manifest';mLink.href=mUrl;document.head.appendChild(mLink);
 </script>
 
 <!-- ===== MAIN APP SCRIPT ===== -->
@@ -1947,6 +1956,7 @@ function switchBuyerTab(tab,btn){
       if(!document.getElementById('form-dinamis-wrap')?.children.length){
         renderFormDinamis();
       }
+      updatePayMethodForm();
     },100);
   }
   renderAll();
@@ -2656,7 +2666,8 @@ async function doLogin(){
 async function doReg(){
   const nama=document.getElementById('rnama').value.trim();
   const email=document.getElementById('remail').value.trim().toLowerCase();
-  const hp=document.getElementById('rhp').value.trim();
+  const hp=getHP('rhp');
+  if(!isHPValid('rhp')){toast('Format nomor HP tidak valid! Contoh: 0812-3456-7890');return;}
   const pw=document.getElementById('rpw').value;
   const pw2=document.getElementById('rpw2').value;
   const err=document.getElementById('rerr');err.style.display='none';
@@ -2966,7 +2977,7 @@ function turunPromo(idx){
 
 // ===== KONFIGURASI PEMBAYARAN =====
 let PAY_CONFIG = {
-  cash: true, qris: false,
+  cash: true, qris: true,
   qrisGlobalImg: '', qrisGlobalNama: 'Ojek Kite',
   qrisGlobalNote: 'Scan & bayar, lalu tunjukkan bukti ke rider'
 };
@@ -3028,11 +3039,15 @@ function renderPayConfigPreview(){
     '</div>';
 }
 function updatePayMethodForm(){
-  const cashBtn=document.getElementById('payopt-cash');const qrisBtn=document.getElementById('payopt-qris');
+  const cashBtn=document.getElementById('payopt-cash');
+  const qrisBtn=document.getElementById('payopt-qris');
   if(!cashBtn||!qrisBtn)return;
-  cashBtn.style.display=PAY_CONFIG.cash?'block':'none';
-  qrisBtn.style.display=PAY_CONFIG.qris?'block':'none';
-  if(PAY_CONFIG.cash)pilihMetodeBayar('cash');else if(PAY_CONFIG.qris)pilihMetodeBayar('qris');
+  // Tampilkan metode sesuai config admin
+  cashBtn.style.display=PAY_CONFIG.cash!==false?'flex':'none';
+  qrisBtn.style.display=PAY_CONFIG.qris!==false?'flex':'none';
+  // Default pilihan
+  if(PAY_CONFIG.cash!==false)pilihMetodeBayar('cash');
+  else if(PAY_CONFIG.qris!==false)pilihMetodeBayar('qris');
 }
 function pilihMetodeBayar(metode){
   selectedMetodeBayar=metode;
@@ -3419,7 +3434,7 @@ function startGrabTimer(o){
   const timerEl=document.getElementById('grab-timer-'+o.id);
   const barEl=document.getElementById('grab-bar-'+o.id);
   if(!timerEl)return;
-  const duration=o.broadcastDuration||30;
+  const duration=o.broadcastDuration||120;
   grabTimers[o.id]=setInterval(()=>{
     const now=Date.now();
     const sisa=o.broadcastExpiry?Math.max(0,Math.round((o.broadcastExpiry-now)/1000)):0;
@@ -3463,7 +3478,7 @@ async function broadcastOrder(order){
   if(order.kelAsalId)zonaList.push(order.kelAsalId);
   // Zona 2: kecamatan sama
   if(kelDariInfo.kecId)zonaList.push(kelDariInfo.kecId);
-  const duration=30;
+  const duration=120; // 2 menit total
   const expiry=Date.now()+(duration*1000);
   const updates={
     status:'broadcasting',
@@ -3478,14 +3493,20 @@ async function broadcastOrder(order){
     try{await db.collection('orders').doc(order.id).update(updates);}
     catch(e){console.warn('Broadcast error:',e);}
   }
-  // Auto-escalate ke semua rider setelah 30 detik jika belum diambil
+  // Fase 1: 60 detik pertama → zona kecamatan sama
+  // Fase 2: 60 detik berikutnya → escalate ke semua rider
   setTimeout(async()=>{
     const fresh=ORDERS.find(x=>x.id===order.id);
     if(fresh&&fresh.status==='broadcasting'&&!fresh.grabbedBy){
       fresh.broadcastZona=['all'];
-      if(useF)await db.collection('orders').doc(order.id).update({broadcastZona:['all'],broadcastExpiry:Date.now()+30000}).catch(()=>{});
+      fresh.broadcastExpiry=Date.now()+60000;
+      if(useF)await db.collection('orders').doc(order.id).update({
+        broadcastZona:['all'],
+        broadcastExpiry:Date.now()+60000
+      }).catch(()=>{});
+      renderAll(); // refresh live feed rider
     }
-  },30000);
+  },60000); // escalate setelah 60 detik
 }
 
 // ===== SUBMIT ORDER — integrasikan zona =====
@@ -3849,10 +3870,13 @@ function renderLiveFeedZona(r){
       <div class="loi-top">
         <span class="loi-status ${statusClass}">${statusLabel}</span>
         <span class="loi-type">${TLBL[o.type]||o.type}</span>
-        ${sisa!==null?`<span class="loi-timer">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          <span id="loi-timer-${o.id}">${String(Math.floor(sisa/60)).padStart(2,'0')}:${String(sisa%60).padStart(2,'0')}</span>
-        </span>`:''}
+        ${sisa!==null?`<div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;margin-left:auto">
+          <span class="loi-timer" style="font-size:14px;font-weight:900">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span id="loi-timer-${o.id}">${String(Math.floor(sisa/60)).padStart(2,'0')}:${String(sisa%60).padStart(2,'0')}</span>
+          </span>
+          <span style="font-size:9px;color:rgba(255,255,255,.7)" id="loi-fase-${o.id}">${sisa>60?'🟡 Zona Kamu':'🟠 Semua Rider'}</span>
+        </div>`:''}
       </div>
 
       <div class="loi-rute">
@@ -3904,9 +3928,16 @@ function startLiveFeedTimer(o){
   if(_liveTimers[o.id])clearTimeout(_liveTimers[o.id]);
   const tick=()=>{
     const el=document.getElementById('loi-timer-'+o.id);
-    if(!el){delete _liveTimers[o.id];return;} // elemen sudah hilang dari DOM
+    if(!el){delete _liveTimers[o.id];return;}
     const sisa=Math.max(0,Math.round((o.broadcastExpiry-Date.now())/1000));
-    el.textContent=String(Math.floor(sisa/60)).padStart(2,'0')+':'+String(sisa%60).padStart(2,'0');
+    const menit=Math.floor(sisa/60);
+    const detik=sisa%60;
+    el.textContent=String(menit).padStart(2,'0')+':'+String(detik).padStart(2,'0');
+    // Warna merah kalau sisa < 30 detik
+    if(el.parentElement)el.style.color=sisa<30?'#EF4444':'#fff';
+    // Label fase
+    const fase=document.getElementById('loi-fase-'+o.id);
+    if(fase)fase.textContent=sisa>60?'🟡 Zona Kamu':'🟠 Semua Rider';
     if(sisa<=0){renderLiveFeed();delete _liveTimers[o.id];return;}
     _liveTimers[o.id]=setTimeout(tick,1000);
   };
@@ -4549,6 +4580,112 @@ async function checkUnreadChats(){
 
 // Tutup chat panel saat pindah tab
 
+
+// ===== VALIDASI & FORMAT NOMOR HP =====
+function formatHP(val){
+  // Hapus semua non-angka
+  let no = val.replace(/\D/g,'');
+  // Normalisasi ke format 62xxx
+  if(no.startsWith('0')) no = '62' + no.slice(1);
+  else if(no.startsWith('8')) no = '62' + no;
+  else if(no.startsWith('+62')) no = '62' + no.slice(3);
+  // Maksimal 15 digit
+  no = no.slice(0,15);
+  return no;
+}
+
+function validasiHP(val){
+  const no = formatHP(val);
+  if(!no) return {valid:false, msg:'Nomor HP wajib diisi', formatted:''};
+  if(no.length < 10) return {valid:false, msg:'Nomor terlalu pendek (min 10 digit)', formatted:no};
+  if(no.length > 15) return {valid:false, msg:'Nomor terlalu panjang', formatted:no};
+  if(!no.startsWith('62')) return {valid:false, msg:'Format tidak valid', formatted:no};
+  return {valid:true, msg:'✓ '+no, formatted:no};
+}
+
+function tampilkanHP(val){
+  // Format tampilan: 0812-3456-7890
+  let no = val.replace(/\D/g,'');
+  if(no.startsWith('62')) no = '0' + no.slice(2);
+  if(no.length <= 4) return no;
+  if(no.length <= 8) return no.slice(0,4)+'-'+no.slice(4);
+  return no.slice(0,4)+'-'+no.slice(4,8)+'-'+no.slice(8);
+}
+
+function initHPInput(inputId){
+  const el=document.getElementById(inputId);
+  if(!el)return;
+  el.classList.add('hp-input');
+  
+  // Wrap dengan div
+  const wrap=document.createElement('div');
+  wrap.className='hp-wrap';
+  el.parentNode.insertBefore(wrap, el);
+  wrap.appendChild(el);
+  
+  // Indikator
+  const ind=document.createElement('span');
+  ind.className='hp-indicator';
+  ind.id=inputId+'-ind';
+  wrap.appendChild(ind);
+  
+  // Pesan validasi
+  const msg=document.createElement('div');
+  msg.className='hp-msg';
+  msg.id=inputId+'-msg';
+  wrap.parentNode.insertBefore(msg, wrap.nextSibling);
+  
+  el.addEventListener('input', function(){
+    const raw=this.value;
+    const result=validasiHP(raw);
+    // Update tampilan
+    const pos=this.selectionStart;
+    this.value=tampilkanHP(raw);
+    // Validasi visual
+    this.classList.toggle('valid', result.valid);
+    this.classList.toggle('invalid', !result.valid&&raw.length>0);
+    const indEl=document.getElementById(inputId+'-ind');
+    const msgEl=document.getElementById(inputId+'-msg');
+    if(raw.length>0){
+      if(indEl){indEl.textContent=result.valid?'✅':'❌';indEl.style.display='block';}
+      if(msgEl){
+        msgEl.textContent=result.valid?'Format: '+result.formatted:result.msg;
+        msgEl.className='hp-msg '+(result.valid?'valid':'invalid');
+      }
+    }else{
+      if(indEl)indEl.style.display='none';
+      if(msgEl)msgEl.className='hp-msg';
+    }
+    // Simpan nilai formatted di dataset
+    this.dataset.formatted=result.formatted;
+  });
+  
+  el.addEventListener('blur', function(){
+    if(this.value){
+      const result=validasiHP(this.value);
+      this.value=tampilkanHP(this.value);
+      this.dataset.formatted=result.formatted;
+    }
+  });
+}
+
+function getHP(inputId){
+  const el=document.getElementById(inputId);
+  if(!el)return '';
+  return el.dataset.formatted||formatHP(el.value);
+}
+
+function isHPValid(inputId){
+  const el=document.getElementById(inputId);
+  if(!el)return false;
+  return validasiHP(el.value).valid;
+}
+
+function initAllHPInputs(){
+  // Init semua field HP di app
+  ['rhp','rnhp','othp','er-hp','eb-hp'].forEach(id=>initHPInput(id));
+}
+
 // ===== ENTER APP =====
 async function enterApp(){
   showLd(true);await loadData();loadTarif();loadPayConfig();loadPromos();loadZona();showLd(false);
@@ -4890,7 +5027,8 @@ async function toggleOutlet(oid){
 async function addRider(){
   const nama=document.getElementById('rnnam').value.trim();
   const email=document.getElementById('rnemail').value.trim().toLowerCase();
-  const hp=document.getElementById('rnhp').value.trim();
+  const hp=getHP('rnhp');
+  if(!isHPValid('rnhp')){toast('Format nomor HP rider tidak valid!');return;}
   const pw=document.getElementById('rnpw').value;
   const nopol=document.getElementById('rnnopol').value.trim();
   const kecId=document.getElementById('rn-kec')?.value||'';
@@ -4940,7 +5078,7 @@ async function addOutlet(){
   const nama=document.getElementById('otnam').value.trim();
   const kat=document.getElementById('otkat').value;
   const alamat=document.getElementById('otalamat').value.trim();
-  const hp=document.getElementById('othp').value.trim();
+  const hp=getHP('othp')||document.getElementById('othp').value.trim();
   const otKecId=document.getElementById('ot-kec')?.value||'';
   const otKelId=document.getElementById('ot-kel')?.value||'';
   const otKecInfo=WILAYAH.find(k=>k.id===otKecId);
@@ -5595,7 +5733,8 @@ async function saveEditBuyer(){
   const id=document.getElementById('eb-id').value;
   const nama=document.getElementById('eb-nama').value.trim();
   const email=document.getElementById('eb-email').value.trim().toLowerCase();
-  const hp=document.getElementById('eb-hp').value.trim();
+  const hp=getHP('eb-hp')||document.getElementById('eb-hp').value.trim();
+  if(document.getElementById('eb-hp').value&&!isHPValid('eb-hp')){toast('Format nomor HP tidak valid!');return;}
   const pw=document.getElementById('eb-pw').value;
   const err=document.getElementById('eb-err');err.style.display='none';
   if(!nama||!email||!hp){err.textContent='Nama, email, dan HP wajib diisi!';err.style.display='block';return;}
@@ -5640,7 +5779,8 @@ async function saveEditRider(){
   const id=document.getElementById('er-id').value;
   const nama=document.getElementById('er-nama').value.trim();
   const email=document.getElementById('er-email').value.trim().toLowerCase();
-  const hp=document.getElementById('er-hp').value.trim();
+  const hp=getHP('er-hp')||document.getElementById('er-hp').value.trim();
+  if(document.getElementById('er-hp').value&&!isHPValid('er-hp')){toast('Format nomor HP tidak valid!');return;}
   const nopol=document.getElementById('er-nopol').value.trim();
   const erKecId=document.getElementById('er-kec')?.value||'';
   const erKelId=document.getElementById('er-kel')?.value||'';
@@ -5684,6 +5824,7 @@ window.addEventListener('load',()=>{
   if(!TARIF_KEC||!TARIF_KEC.length)TARIF_KEC=[...TARIF_KEC_DEFAULT];
   loadTarif();
   showLd(false);showA('sl');fillZona();
+  setTimeout(initAllHPInputs, 500);
 });
 </script>
 </body>
