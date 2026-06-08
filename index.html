@@ -414,6 +414,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .tagihan-status.lunas{background:#D1FAE5;color:#065F46}
 .tagihan-status.qris{background:#DBEAFE;color:#1E40AF}
 
+
+.outlet-tutup{opacity:.6;cursor:not-allowed !important}
+.outlet-tutup:hover{transform:none !important;box-shadow:var(--sh) !important}
+
 /* ===== ZONA & FIRST GRAB ===== */
 .zona-form-group{background:#F8FAFF;border:1.5px solid var(--br);border-radius:12px;padding:12px 14px;margin-bottom:10px}
 .zona-form-group .zfg-title{font-size:11px;font-weight:800;color:var(--t2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;display:flex;align-items:center;gap:5px}
@@ -953,6 +957,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
             <div class="ki-bg" style="background:linear-gradient(135deg,#D1FAE5,#A7F3D0)">🎁</div>
             <div class="ki-label">Lainnya</div>
           </div>
+          <div class="katalog-item" onclick="pilihLayanan('mobil')">
+            <div class="ki-bg" style="background:linear-gradient(135deg,#DBEAFE,#BFDBFE)">🚗</div>
+            <div class="ki-label">Antar<br>Mobil</div>
+          </div>
         </div>
 
         <!-- Outlet Terdekat -->
@@ -1006,6 +1014,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
             <div class="lp-item" data-val="belanja" onclick="pilihLayananForm('belanja',this)"><span class="lp-ikon">🛒</span><div class="lp-label">Belanja</div></div>
             <div class="lp-item" data-val="paket" onclick="pilihLayananForm('paket',this)"><span class="lp-ikon">📦</span><div class="lp-label">Paket</div></div>
             <div class="lp-item" data-val="lainnya" onclick="pilihLayananForm('lainnya',this)"><span class="lp-ikon">🎁</span><div class="lp-label">Lainnya</div></div>
+            <div class="lp-item" data-val="mobil" onclick="pilihLayananForm('mobil',this)"><span class="lp-ikon">🚗</span><div class="lp-label">Mobil</div></div>
           </div>
           <input type="hidden" id="btype" value="ojek">
         </div>
@@ -1502,6 +1511,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <button class="zona-sub-tab on" onclick="zonaSubTab('wilayah',this)">📌 Wilayah</button>
         <button class="zona-sub-tab" onclick="zonaSubTab('tarif-kel',this)">🏘️ Tarif Kel.</button>
         <button class="zona-sub-tab" onclick="zonaSubTab('tarif-kec',this)">🏙️ Tarif Kec.</button>
+        <button class="zona-sub-tab" onclick="zonaSubTab('tarif-mobil',this)">🚗 Tarif Mobil</button>
       </div>
 
       <!-- Sub: Wilayah -->
@@ -1562,6 +1572,32 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <div class="tscroll"><table class="tarif-table">
           <thead><tr><th>Dari</th><th>Ke</th><th>Harga</th><th></th></tr></thead>
           <tbody id="tarif-kec-tbody"></tbody>
+        </table></div>
+      </div>
+
+      <!-- Sub: Tarif Mobil -->
+      <div id="zona-tab-tarif-mobil" style="display:none">
+        <div style="font-size:11px;color:var(--g);background:var(--gl);border-radius:8px;padding:8px 12px;margin-bottom:10px">
+          🚗 Tarif khusus layanan <strong>Antar Mobil</strong> — terpisah dari tarif motor/ojek.
+        </div>
+        <div class="card" style="margin-bottom:10px">
+          <div style="font-size:12px;font-weight:700;color:var(--g);margin-bottom:8px">+ Tambah / Edit Tarif Mobil</div>
+          <div class="zona-row">
+            <div class="fr" style="margin:0"><label>Dari Kecamatan</label>
+              <select id="tf-mobil-dari" style="font-size:12px;border-radius:8px"></select>
+            </div>
+            <div class="fr" style="margin:0"><label>Ke Kecamatan</label>
+              <select id="tf-mobil-ke" style="font-size:12px;border-radius:8px"></select>
+            </div>
+          </div>
+          <div class="fr" style="margin-top:8px"><label>Harga Mobil (Rp)</label>
+            <input type="number" id="tf-mobil-harga" placeholder="cth: 50000" min="0" style="border-radius:8px">
+          </div>
+          <button class="btn bp bfull" onclick="simpanTarifMobil()"><i class="ti ti-device-floppy"></i>Simpan Tarif Mobil</button>
+        </div>
+        <div class="tscroll"><table class="tarif-table">
+          <thead><tr><th>Dari</th><th>Ke</th><th>Harga Mobil</th><th></th></tr></thead>
+          <tbody id="tarif-mobil-tbody"></tbody>
         </table></div>
       </div>
     </div>
@@ -1910,7 +1946,7 @@ catch(e){console.warn('Firebase:',e.message);}
 // ===== CONSTANTS =====
 const ADMIN_EMAIL='admin@ojekkite.com', ADMIN_PW='123456';
 const TLBL_STATUS={pending:'Menunggu',assigned:'Ditugaskan',diproses:'Diproses',selesai:'Selesai',ditolak:'Dikembalikan'};
-const TLBL={ojek:'🏍️ Ojek Penumpang',makanan:'🍔 Beli Makan',belanja:'🛒 Belanja/Titip',paket:'📦 Antar Paket',laundry:'🧺 Jemput Laundry',lainnya:'🎁 Lainnya',dokumen:'📄 Antar Dokumen'};
+const TLBL={ojek:'🏍️ Ojek Penumpang',mobil:'🚗 Antar Mobil',makanan:'🍔 Beli Makan',belanja:'🛒 Belanja / Titip',laundry:'🧺 Jemput Laundry',paket:'📦 Antar Paket',lainnya:'🎁 Lainnya'};
 const KICO={makanan:'🍱',dokumen:'📄',belanja:'🛍️',lainnya:'📦'};
 
 // KONFIGURASI TARIF (default)
@@ -3578,8 +3614,11 @@ async function submitOrder(){
   const out=outId&&outId!=='lainnya'?OUTLETS.find(o=>o.id===outId):null;
   const rFav=null; // Sistem First Grab
   // Tarif berdasarkan kecamatan
-  const tarifKec=TARIF_KEC.find(t=>t.dari===kecAsalId&&t.ke===kecTujuanId);
-  const tarifResult=tarifKec?{harga:tarifKec.harga,sumber:'kecamatan'}:null;
+  const isMobilOrder=type==='mobil';
+  const tarifKec=isMobilOrder
+    ? TARIF_MOBIL.find(t=>t.dari===kecAsalId&&t.ke===kecTujuanId)
+    : TARIF_KEC.find(t=>t.dari===kecAsalId&&t.ke===kecTujuanId);
+  const tarifResult=tarifKec?{harga:tarifKec.harga,sumber:isMobilOrder?'mobil':'kecamatan'}:null;
 
   // Hitung total tagihan
   const ongkir=tarifResult?tarifResult.harga:null;
@@ -3646,13 +3685,14 @@ async function submitOrder(){
 
 // ===== ADMIN ZONA MANAGEMENT =====
 function zonaSubTab(tab,btn){
-  ['wilayah','tarif-kel','tarif-kec'].forEach(t=>{
+  ['wilayah','tarif-kel','tarif-kec','tarif-mobil'].forEach(t=>{
     const el=document.getElementById('zona-tab-'+t);if(el)el.style.display=t===tab?'block':'none';
   });
   document.querySelectorAll('.zona-sub-tab').forEach(b=>b.classList.remove('on'));
   if(btn)btn.classList.add('on');
   if(tab==='tarif-kel')renderTarifKelTable();
   if(tab==='tarif-kec')renderTarifKecTable();
+  if(tab==='tarif-mobil'){renderTarifMobilTable();}
   if(tab==='wilayah')renderWilayahList();
 }
 
@@ -4217,15 +4257,21 @@ function renderFormDinamis(){
       </div>`;
 
   }else if(type==='makanan'){
-    const outletList=OUTLETS.filter(o=>o.aktif).map(o=>`
-      <div class="outlet-pilih-item" onclick="pilihOutletForm('${o.id}')" id="opi-${o.id}">
+    const outletList=OUTLETS.filter(o=>o.aktif).map(o=>{
+      const isBuka=o.statusBuka!==false;
+      return`<div class="outlet-pilih-item ${isBuka?'':'outlet-tutup'}"
+        onclick="${isBuka?`pilihOutletForm('${o.id}')`:``}"
+        id="opi-${o.id}" style="${isBuka?'':'opacity:.55;cursor:not-allowed'}">
         <div class="opi-ico">${KICO[o.kategori]||'🍽️'}</div>
         <div class="opi-info">
           <div class="opi-nama">${o.nama}</div>
-          <div class="opi-kat">${o.alamat||''}</div>
+          <div class="opi-kat" style="display:flex;align-items:center;gap:4px">
+            <span style="width:6px;height:6px;border-radius:50%;background:${isBuka?'#10B981':'#EF4444'};display:inline-block"></span>
+            <span style="color:${isBuka?'var(--t2)':'#EF4444'}">${isBuka?o.alamat||'':'Sedang Tutup'}</span>
+          </div>
         </div>
-        <div class="opi-chk" id="opi-chk-${o.id}"></div>
-      </div>`).join('');
+        <div class="opi-chk" id="opi-chk-${o.id}">${isBuka?'':'🔴'}</div>
+      </div>`;}).join('');
     html=`
       <div class="form-section">
         <div class="form-section-header">
@@ -4294,6 +4340,19 @@ function renderFormDinamis(){
         </div>
       </div>`;
 
+  }else if(type==='mobil'){
+    html=`
+      <div class="form-section">
+        <div class="form-section-header">
+          <div class="fsh-ico" style="background:#DBEAFE">🚗</div>
+          <div><div class="fsh-title">Rute Perjalanan</div><div class="fsh-sub">Antar dengan mobil</div></div>
+        </div>
+        <div class="form-section-body">
+          ${zonaAsal}
+          <div style="height:8px"></div>
+          ${zonaTujuan}
+        </div>
+      </div>`;
   }else{
     const labels={paket:'📦 Detail Paket',belanja:'🛒 Detail Belanjaan',lainnya:'📝 Keterangan'};
     const placeholders={paket:'cth: Paket dokumen, berat ±1kg',belanja:'cth: Beli beras 5kg di Toko Sejahtera',lainnya:'Ceritakan kebutuhan kamu...'};
@@ -4372,7 +4431,11 @@ function onZonaChange(){
     if(hdNone)hdNone.style.display='none';
     return;
   }
-  const tarifKec=TARIF_KEC.find(t=>t.dari===kecDariId&&t.ke===kecKeId);
+  const type=document.getElementById('btype')?.value||'ojek';
+  const isMobil=type==='mobil';
+  const tarifKec=isMobil
+    ? TARIF_MOBIL.find(t=>t.dari===kecDariId&&t.ke===kecKeId)
+    : TARIF_KEC.find(t=>t.dari===kecDariId&&t.ke===kecKeId);
   if(tarifKec){
     if(hdDisplay)hdDisplay.style.display='block';
     if(hdNone)hdNone.style.display='none';
@@ -4727,6 +4790,61 @@ function isHPValid(inputId){
 function initAllHPInputs(){
   // Init semua field HP di app
   ['rhp','rnhp','othp','er-hp','eb-hp'].forEach(id=>initHPInput(id));
+}
+
+
+// ===== TARIF MOBIL =====
+const TARIF_MOBIL_DEFAULT = [
+  {dari:'kec1',ke:'kec1',harga:25000},
+  {dari:'kec1',ke:'kec2',harga:50000},{dari:'kec2',ke:'kec1',harga:50000},
+  {dari:'kec1',ke:'kec3',harga:60000},{dari:'kec3',ke:'kec1',harga:60000},
+  {dari:'kec1',ke:'kec4',harga:90000},{dari:'kec4',ke:'kec1',harga:90000},
+  {dari:'kec1',ke:'kec5',harga:70000},{dari:'kec5',ke:'kec1',harga:70000},
+  {dari:'kec2',ke:'kec2',harga:25000},
+  {dari:'kec2',ke:'kec3',harga:60000},{dari:'kec3',ke:'kec2',harga:60000},
+];
+let TARIF_MOBIL=[...TARIF_MOBIL_DEFAULT];
+
+function loadTarifMobil(){
+  try{const t=localStorage.getItem('ojekKiteTarifMobil');if(t)TARIF_MOBIL=JSON.parse(t);}catch(e){}
+}
+function saveTarifMobil(){
+  try{localStorage.setItem('ojekKiteTarifMobil',JSON.stringify(TARIF_MOBIL));}catch(e){}
+}
+function cariHargaMobil(kecDariId, kecKeId){
+  const t=TARIF_MOBIL.find(x=>x.dari===kecDariId&&x.ke===kecKeId);
+  return t?{harga:t.harga,sumber:'mobil'}:null;
+}
+
+
+// ===== ADMIN TARIF MOBIL =====
+function renderTarifMobilTable(){
+  getAllKecSelect('tf-mobil-dari');
+  getAllKecSelect('tf-mobil-ke');
+  const tbody=document.getElementById('tarif-mobil-tbody');if(!tbody)return;
+  const kecMap=Object.fromEntries(WILAYAH.map(k=>[k.id,k.nama]));
+  tbody.innerHTML=TARIF_MOBIL.map((t,i)=>`
+    <tr>
+      <td>${kecMap[t.dari]||t.dari}</td>
+      <td>${kecMap[t.ke]||t.ke}</td>
+      <td><strong>${fmtRp(t.harga)}</strong></td>
+      <td><button class="btn bd bsm" style="padding:3px 8px" onclick="hapusTarifMobil(${i})">✕</button></td>
+    </tr>`).join('');
+}
+function simpanTarifMobil(){
+  const dari=document.getElementById('tf-mobil-dari')?.value;
+  const ke=document.getElementById('tf-mobil-ke')?.value;
+  const harga=parseInt(document.getElementById('tf-mobil-harga')?.value)||0;
+  if(!dari||!ke){toast('Pilih asal & tujuan!');return;}
+  if(!harga){toast('Isi harga!');return;}
+  const idx=TARIF_MOBIL.findIndex(t=>t.dari===dari&&t.ke===ke);
+  if(idx>=0)TARIF_MOBIL[idx].harga=harga;
+  else TARIF_MOBIL.push({dari,ke,harga});
+  saveTarifMobil();renderTarifMobilTable();
+  toast('Tarif mobil disimpan: '+fmtRp(harga));
+}
+function hapusTarifMobil(idx){
+  TARIF_MOBIL.splice(idx,1);saveTarifMobil();renderTarifMobilTable();toast('Tarif dihapus.');
 }
 
 // ===== ENTER APP =====
@@ -5323,13 +5441,19 @@ function renderBeranda(){
   const outEl=document.getElementById('beranda-outlets');if(!outEl)return;
   const aktif=OUTLETS.filter(o=>o.aktif);
   if(!aktif.length){outEl.innerHTML='<div style="font-size:12px;color:var(--t2);padding:8px 0 16px">Belum ada outlet aktif</div>';return;}
-  outEl.innerHTML='<div class="outlet-menu-grid">'+aktif.slice(0,4).map(o=>`
-    <div class="outlet-card" onclick="bukaMenuOutlet('${o.id}')">
+  outEl.innerHTML='<div class="outlet-menu-grid">'+aktif.slice(0,4).map(o=>{
+    const isBuka=o.statusBuka!==false;
+    return`<div class="outlet-card ${isBuka?'':'outlet-tutup'}" onclick="${isBuka?`bukaMenuOutlet('${o.id}')`:``}" style="${isBuka?'':'cursor:not-allowed'}">
       <div class="oc-ikon">${KICO[o.kategori]||'📦'}</div>
       <div class="oc-nama">${o.nama}</div>
       <div class="oc-kat">${o.alamat} · ${(o.menu||[]).length} menu</div>
-      <div style="margin-top:4px"><span class="badge bb">Lihat Menu</span></div>
-    </div>`).join('')+'</div>';
+      <div style="margin-top:4px;display:flex;align-items:center;gap:4px">
+        <span style="width:6px;height:6px;border-radius:50%;background:${isBuka?'#10B981':'#EF4444'};display:inline-block"></span>
+        <span style="font-size:10px;font-weight:700;color:${isBuka?'#10B981':'#EF4444'}">${isBuka?'Buka':'Tutup'}</span>
+      </div>
+      <div style="margin-top:4px"><span class="badge ${isBuka?'bb':'br2'}">${isBuka?'Lihat Menu':'Sedang Tutup'}</span></div>
+    </div>`;
+  }).join('')+'</div>';
 }
 
 // Promo slider dots
@@ -5854,10 +5978,25 @@ function renderAOutlets(){
         <div style="display:flex;gap:5px;flex-wrap:wrap">
           <button class="btn bsm bpu" onclick="bukaKelolaMenu('${o.id}')"><i class="ti ti-tools"></i>Menu</button>
           <button class="btn bsm ${o.aktif?'bd':'bo'}" onclick="toggleOutlet('${o.id}')">${o.aktif?'Off':'On'}</button>
+          <button class="btn bsm" style="background:${o.statusBuka!==false?'#10B981':'#EF4444'};color:#fff;border:none" onclick="toggleBukaOutlet('${o.id}')">
+            ${o.statusBuka!==false?'🟢 Buka':'🔴 Tutup'}
+          </button>
           <button class="btn bsm bd" onclick="hapusOutlet('${o.id}','${o.nama}')">🗑️</button>
         </div>
       </div>
     </div>`;}).join('');
+}
+
+
+async function toggleBukaOutlet(oid){
+  const o=OUTLETS.find(x=>x.id===oid);if(!o)return;
+  o.statusBuka = o.statusBuka===false ? true : false;
+  if(useF){
+    try{await db.collection('outlets').doc(oid).update({statusBuka:o.statusBuka});}
+    catch(e){toast('Gagal update: '+e.message);return;}
+  }
+  renderAOutlets();renderBeranda();
+  toast(o.nama+' sekarang '+(o.statusBuka?'🟢 Buka':'🔴 Tutup'));
 }
 
 async function hapusOutlet(oid, nama){
@@ -6000,7 +6139,7 @@ window.addEventListener('load',()=>{
   if(!WILAYAH||!WILAYAH.length)WILAYAH=[...WILAYAH_DEFAULT];
   if(!TARIF_KEL||!TARIF_KEL.length)TARIF_KEL=[...TARIF_KEL_DEFAULT];
   if(!TARIF_KEC||!TARIF_KEC.length)TARIF_KEC=[...TARIF_KEC_DEFAULT];
-  loadTarif();
+  loadTarif();loadTarifMobil();
   showLd(false);showA('sl');fillZona();
   setTimeout(initAllHPInputs, 500);
 });
