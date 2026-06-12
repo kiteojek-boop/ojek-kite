@@ -15,7 +15,7 @@
 <meta property="og:title" content="Ojek Kite Ketapang">
 <meta property="og:description" content="Ojek online lokal Ketapang — antar cepat, sampai tepat">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://ojek-kite-ketapang.netlify.app">
+<meta property="og:url" content="https://ojek-kite.kiteojek.workers.dev">
 <meta name="description" content="Ojek online lokal — antar cepat, sampai tepat">
 <link rel="manifest" href="manifest.json">
 <!-- Apple Touch Icon (inline via data URI) -->
@@ -5041,7 +5041,7 @@ async function notifWAOrderBaru(order){
     '📍 '+asal+' → '+tujuan+
     (order.bto?'\n📌 '+order.bto:'')+
     '\n💰 '+fmtRp(harga)+' · '+(order.metodeBayar==='qris'?'QRIS':'Tunai')+
-    '\n\nSegera buka app & tugaskan rider:\n👉 https://ojekkite.pages.dev';
+    '\n\nSegera buka app & tugaskan rider:\n👉 https://ojek-kite.kiteojek.workers.dev';
   await kirimFonnte(WA_CONFIG.adminHp, pesan);
 }
 
@@ -5067,7 +5067,7 @@ async function notifWAOrderDitolak(order){
     (TLBL[order.type]||order.type)+'\n'+
     '👤 '+order.buyerNama+'\n'+
     '↩️ Rider: '+(order.assignedRiderNama||'—')+' menolak\n\n'+
-    'Segera tugaskan rider lain:\n👉 https://ojekkite.pages.dev';
+    'Segera tugaskan rider lain:\n👉 https://ojek-kite.kiteojek.workers.dev';
   await kirimFonnte(WA_CONFIG.adminHp, pesan);
 }
 
@@ -5077,7 +5077,7 @@ async function testWANotif(){
   if(!WA_CONFIG.token){toast('Isi token Fonnte dulu!');return;}
   if(!WA_CONFIG.adminHp){toast('Isi nomor WA admin dulu!');return;}
   if(statusEl) statusEl.textContent = '⏳ Mengirim test...';
-  const pesan = '✅ *Test Notif Ojek Kite*\n\nKoneksi Fonnte berhasil! Notifikasi order akan masuk ke nomor ini.\n\n👉 https://ojekkite.pages.dev';
+  const pesan = '✅ *Test Notif Ojek Kite*\n\nKoneksi Fonnte berhasil! Notifikasi order akan masuk ke nomor ini.\n\n👉 https://ojek-kite.kiteojek.workers.dev';
   const ok = await kirimFonnte(WA_CONFIG.adminHp, pesan);
   if(statusEl){
     statusEl.textContent = ok ? '✅ Berhasil! Cek WA kamu.' : '❌ Gagal. Cek token & nomor HP.';
@@ -5457,7 +5457,7 @@ function buatPesanWA(order, rider){
     `💰 ${fmtRp(harga)} · ${bayar}\n`+
     `👤 ${order.buyerNama} · ${order.buyerHp}\n\n`+
     `Segera buka app Ojek Kite:\n`+
-    `👉 https://ojekkite.pages.dev`;
+    `👉 https://ojek-kite.kiteojek.workers.dev`
 }
 
 // Opsi A: Pilih rider dulu (untuk order belum ada rider)
