@@ -354,6 +354,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .beranda-bell-btn{background:rgba(255,255,255,.2);border:1.5px solid rgba(255,255,255,.35);border-radius:12px;padding:6px 10px;cursor:pointer;display:flex;align-items:center;gap:5px;color:#fff;font-size:12px;font-weight:700;position:relative;flex-shrink:0}
 .beranda-bell-btn .bell-badge{position:absolute;top:-6px;right:-6px;background:#EF4444;color:#fff;border-radius:50%;width:18px;height:18px;font-size:9px;font-weight:800;display:none;align-items:center;justify-content:center;border:2px solid transparent}
 
+
+/* ===== WA ASSIGN ===== */
+.btn-wa{padding:9px 14px;background:#25D366;color:#fff;border:none;border-radius:10px;font-size:12px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .2s}
+.btn-wa:active{transform:scale(.97)}
+.wa-rider-item{display:flex;align-items:center;gap:10px;padding:10px 14px;border:1.5px solid var(--br);border-radius:10px;margin-bottom:8px;cursor:pointer;transition:all .15s;background:#fff}
+.wa-rider-item:hover{border-color:#25D366;background:#F0FDF4}
+.wa-rider-item .wri-av{width:36px;height:36px;border-radius:10px;background:#D1FAE5;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#065F46;flex-shrink:0}
+.wa-rider-item .wri-info{flex:1}
+.wa-rider-item .wri-nama{font-size:13px;font-weight:700;color:var(--tx)}
+.wa-rider-item .wri-zona{font-size:11px;color:var(--t2);margin-top:1px}
+.wa-rider-item .wri-hp{font-size:11px;color:#25D366;font-weight:700}
+
 /* ===== ADMIN ORDER ACTIONS ===== */
 .admin-action-bar{display:flex;gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid var(--br);flex-wrap:wrap}
 .btn-admin-tugaskan{flex:1;padding:10px 14px;background:var(--grad);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;min-width:140px}
@@ -1221,6 +1233,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <button class="tab" onclick="aTab('bayar',this)">💳 Bayar</button>
       <button class="tab" onclick="aTab('promo',this)">🎯 Promo</button>
       <button class="tab" onclick="aTab('zona',this)">🗺️ Zona</button>
+      <button class="tab" onclick="aTab('notif-wa',this)">📱 Notif WA</button>
       <button class="tab" onclick="aTab('daftar',this)">Daftar</button>
     </div>
     <div id="at-pesanan" class="tc on">
@@ -1505,6 +1518,87 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     </div>
 
     <!-- TAB ZONA WILAYAH & TARIF -->
+    <!-- TAB NOTIFIKASI WHATSAPP -->
+    <div id="at-notif-wa" class="tc">
+      <div class="stitle" style="margin-top:0">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.116 1.524 5.843L0 24l6.324-1.501A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.368l-.36-.214-3.732.885.916-3.618-.235-.373A9.818 9.818 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182S21.818 6.58 21.818 12 17.42 21.818 12 21.818z"/></svg>
+        Notifikasi WhatsApp
+      </div>
+
+      <!-- Info Fonnte -->
+      <div style="background:#F0FDF4;border:1px solid #BBF7D0;border-radius:12px;padding:12px 14px;margin-bottom:14px;font-size:12px;color:#065F46;line-height:1.6">
+        <div style="font-weight:800;margin-bottom:4px">📱 Powered by Fonnte</div>
+        Daftar gratis di <strong>fonnte.com</strong> → sambungkan nomor WA → copy token → paste di bawah.
+      </div>
+
+      <!-- Toggle aktif/nonaktif -->
+      <div class="card" style="margin-bottom:10px">
+        <label style="display:flex;align-items:center;justify-content:space-between;cursor:pointer">
+          <div>
+            <div style="font-size:13px;font-weight:700">Aktifkan Notif WA</div>
+            <div style="font-size:11px;color:var(--t2)">Kirim WA otomatis saat ada order masuk</div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="cfg-wa-aktif">
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          </label>
+        </label>
+      </div>
+
+      <!-- Konfigurasi Fonnte -->
+      <div class="card">
+        <div class="fr">
+          <label>Token Fonnte</label>
+          <input type="text" id="cfg-wa-token" placeholder="Paste token Fonnte di sini..."
+            style="font-family:monospace;font-size:12px">
+          <div style="font-size:10px;color:var(--t3);margin-top:4px">Dapatkan token di fonnte.com → Device → Token</div>
+        </div>
+        <div class="fr">
+          <label>Nomor WA Admin (terima notif)</label>
+          <input type="tel" id="cfg-wa-admin-hp" placeholder="0812-3456-7890"
+            oninput="initHPInput && setTimeout(()=>initHPInput('cfg-wa-admin-hp'),100)">
+          <div style="font-size:10px;color:var(--t3);margin-top:4px">Nomor ini yang akan menerima notif setiap ada order masuk</div>
+        </div>
+
+        <!-- Pilih event notifikasi -->
+        <div style="font-size:12px;font-weight:700;color:var(--tx);margin-bottom:8px;margin-top:4px">Kirim notif saat:</div>
+        <div class="fr" style="margin-bottom:6px">
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
+            <input type="checkbox" id="cfg-wa-ev-order" checked style="width:16px;height:16px">
+            <span style="font-size:12px">📦 Order baru masuk</span>
+          </label>
+        </div>
+        <div class="fr" style="margin-bottom:6px">
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
+            <input type="checkbox" id="cfg-wa-ev-selesai" checked style="width:16px;height:16px">
+            <span style="font-size:12px">✅ Order selesai</span>
+          </label>
+        </div>
+        <div class="fr" style="margin-bottom:12px">
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
+            <input type="checkbox" id="cfg-wa-ev-tolak" style="width:16px;height:16px">
+            <span style="font-size:12px">↩️ Order ditolak rider</span>
+          </label>
+        </div>
+
+        <button class="btn bp bfull" onclick="saveWAConfig()">
+          <i class="ti ti-device-floppy"></i>Simpan Konfigurasi WA
+        </button>
+      </div>
+
+      <!-- Test WA -->
+      <div class="card" style="margin-top:10px;background:#F0FDF4;border:1px solid #BBF7D0">
+        <div style="font-size:13px;font-weight:700;color:#065F46;margin-bottom:8px">🧪 Test Koneksi</div>
+        <div style="font-size:12px;color:var(--t2);margin-bottom:10px">Kirim pesan test ke nomor admin untuk memastikan Fonnte terhubung</div>
+        <button class="btn bfull" onclick="testWANotif()"
+          style="background:#25D366;color:#fff;border:none;border-radius:10px;padding:11px;font-size:13px;font-weight:700;cursor:pointer">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#fff" style="vertical-align:middle;margin-right:6px"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.116 1.524 5.843L0 24l6.324-1.501A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.368l-.36-.214-3.732.885.916-3.618-.235-.373A9.818 9.818 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182S21.818 6.58 21.818 12 17.42 21.818 12 21.818z"/></svg>
+          Kirim Test WA
+        </button>
+        <div id="wa-test-status" style="font-size:11px;margin-top:8px;text-align:center"></div>
+      </div>
+    </div>
+
     <div id="at-zona" class="tc">
       <div class="stitle" style="margin-top:0"><i class="ti ti-map-2" style="color:var(--g)"></i>Zona Wilayah & Tarif</div>
       <div class="zona-sub-tabs">
@@ -1722,6 +1816,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <div class="mact">
     <button class="btn bp" style="flex:1;justify-content:center" onclick="saveEditRider()"><i class="ti ti-device-floppy"></i>Simpan</button>
     <button class="btn bgr bsm" onclick="closeM('mEditRider')">Batal</button>
+  </div>
+</div></div>
+
+<!-- Modal WA Assign -->
+<div id="mwaassign" class="mover"><div class="modal" style="max-height:85vh;overflow-y:auto">
+  <div class="mhdr" style="background:#25D366">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.116 1.524 5.843L0 24l6.324-1.501A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.368l-.36-.214-3.732.885.916-3.618-.235-.373A9.818 9.818 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182S21.818 6.58 21.818 12 17.42 21.818 12 21.818z"/></svg>
+    <span style="color:#fff">Tugaskan via WhatsApp</span>
+    <button class="mclose" onclick="closeM('mwaassign')" style="color:#fff">✕</button>
+  </div>
+  <div style="padding:14px">
+    <div style="font-size:12px;background:#F0FDF4;border-radius:10px;padding:10px 12px;margin-bottom:12px;color:#065F46" id="wa-order-info"></div>
+    <div style="font-size:12px;font-weight:700;color:var(--tx);margin-bottom:8px">Pilih Rider yang akan dihubungi:</div>
+    <div id="wa-rider-list"></div>
   </div>
 </div></div>
 
@@ -3678,6 +3786,8 @@ async function submitOrder(){
   setTimeout(renderFormDinamis,200);
 
   toast(tarifResult?'Pesanan dikirim! Tarif: '+fmtRp(tarifResult.harga):'Pesanan dikirim ke rider!');
+  // Kirim notif WA ke admin
+  setTimeout(()=>notifWAOrderBaru(order), 1000);
   if(selectedMetodeBayar==='qris'&&tarifResult){setTimeout(()=>tampilQRISBuyer(tarifResult.harga),600);}
   switchBuyerTab('aktif',document.querySelectorAll('.bnav-btn')[2]);
   renderAll();
@@ -4847,6 +4957,134 @@ function hapusTarifMobil(idx){
   TARIF_MOBIL.splice(idx,1);saveTarifMobil();renderTarifMobilTable();toast('Tarif dihapus.');
 }
 
+
+// ===== KONFIGURASI NOTIF WHATSAPP (FONNTE) =====
+let WA_CONFIG = {
+  aktif: false,
+  token: '',
+  adminHp: '',
+  evOrder: true,
+  evSelesai: true,
+  evTolak: false
+};
+
+function loadWAConfig(){
+  try{
+    const s=localStorage.getItem('ojekKiteWAConfig');
+    if(s) WA_CONFIG={...WA_CONFIG,...JSON.parse(s)};
+  }catch(e){}
+}
+
+function saveWAConfig(){
+  WA_CONFIG.aktif = document.getElementById('cfg-wa-aktif')?.checked||false;
+  WA_CONFIG.token = document.getElementById('cfg-wa-token')?.value?.trim()||'';
+  WA_CONFIG.adminHp = getHP('cfg-wa-admin-hp')||document.getElementById('cfg-wa-admin-hp')?.value?.trim()||'';
+  WA_CONFIG.evOrder = document.getElementById('cfg-wa-ev-order')?.checked||false;
+  WA_CONFIG.evSelesai = document.getElementById('cfg-wa-ev-selesai')?.checked||false;
+  WA_CONFIG.evTolak = document.getElementById('cfg-wa-ev-tolak')?.checked||false;
+
+  if(WA_CONFIG.aktif && !WA_CONFIG.token){
+    toast('Isi token Fonnte dulu!'); return;
+  }
+  if(WA_CONFIG.aktif && !WA_CONFIG.adminHp){
+    toast('Isi nomor WA admin dulu!'); return;
+  }
+  try{localStorage.setItem('ojekKiteWAConfig', JSON.stringify(WA_CONFIG));}catch(e){}
+  toast('✅ Konfigurasi WA disimpan!');
+}
+
+function renderWAConfigUI(){
+  const el = id => document.getElementById(id);
+  if(el('cfg-wa-aktif')) el('cfg-wa-aktif').checked = WA_CONFIG.aktif;
+  if(el('cfg-wa-token')) el('cfg-wa-token').value = WA_CONFIG.token;
+  if(el('cfg-wa-admin-hp')) el('cfg-wa-admin-hp').value = WA_CONFIG.adminHp;
+  if(el('cfg-wa-ev-order')) el('cfg-wa-ev-order').checked = WA_CONFIG.evOrder;
+  if(el('cfg-wa-ev-selesai')) el('cfg-wa-ev-selesai').checked = WA_CONFIG.evSelesai;
+  if(el('cfg-wa-ev-tolak')) el('cfg-wa-ev-tolak').checked = WA_CONFIG.evTolak;
+}
+
+// Kirim pesan WA via Fonnte API
+async function kirimFonnte(hp, pesan){
+  if(!WA_CONFIG.aktif || !WA_CONFIG.token) return false;
+  try{
+    const res = await fetch('https://api.fonnte.com/send', {
+      method: 'POST',
+      headers: {
+        'Authorization': WA_CONFIG.token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        target: hp,
+        message: pesan,
+        countryCode: '62'
+      })
+    });
+    const data = await res.json();
+    return data.status === true;
+  }catch(e){
+    console.warn('Fonnte error:', e);
+    return false;
+  }
+}
+
+// Notif ke admin — order baru masuk
+async function notifWAOrderBaru(order){
+  if(!WA_CONFIG.aktif || !WA_CONFIG.evOrder || !WA_CONFIG.adminHp) return;
+  const tipe = TLBL[order.type]||order.type;
+  const asal = order.kecAsalNama||order.from||'—';
+  const tujuan = order.kecTujuanNama||order.to||'—';
+  const harga = order.totalTagihan||order.hargaZona||0;
+  const pesan =
+    '📦 *OJEK KITE — ORDER BARU MASUK!*\n\n'+
+    tipe+'\n'+
+    '👤 '+order.buyerNama+' · '+order.buyerHp+'\n'+
+    '📍 '+asal+' → '+tujuan+
+    (order.bto?'\n📌 '+order.bto:'')+
+    '\n💰 '+fmtRp(harga)+' · '+(order.metodeBayar==='qris'?'QRIS':'Tunai')+
+    '\n\nSegera buka app & tugaskan rider:\n👉 https://ojekkite.pages.dev';
+  await kirimFonnte(WA_CONFIG.adminHp, pesan);
+}
+
+// Notif ke admin — order selesai
+async function notifWAOrderSelesai(order){
+  if(!WA_CONFIG.aktif || !WA_CONFIG.evSelesai || !WA_CONFIG.adminHp) return;
+  const harga = order.totalTagihan||order.hargaZona||0;
+  const pesan =
+    '✅ *OJEK KITE — ORDER SELESAI*\n\n'+
+    (TLBL[order.type]||order.type)+'\n'+
+    '👤 '+order.buyerNama+'\n'+
+    '🏍️ Rider: '+(order.assignedRiderNama||'—')+'\n'+
+    '💰 '+fmtRp(harga)+
+    (order.paymentLunas?' · ✓ Lunas':' · Belum Bayar');
+  await kirimFonnte(WA_CONFIG.adminHp, pesan);
+}
+
+// Notif ke admin — rider tolak order
+async function notifWAOrderDitolak(order){
+  if(!WA_CONFIG.aktif || !WA_CONFIG.evTolak || !WA_CONFIG.adminHp) return;
+  const pesan =
+    '⚠️ *OJEK KITE — ORDER DITOLAK RIDER*\n\n'+
+    (TLBL[order.type]||order.type)+'\n'+
+    '👤 '+order.buyerNama+'\n'+
+    '↩️ Rider: '+(order.assignedRiderNama||'—')+' menolak\n\n'+
+    'Segera tugaskan rider lain:\n👉 https://ojekkite.pages.dev';
+  await kirimFonnte(WA_CONFIG.adminHp, pesan);
+}
+
+// Test koneksi
+async function testWANotif(){
+  const statusEl = document.getElementById('wa-test-status');
+  if(!WA_CONFIG.token){toast('Isi token Fonnte dulu!');return;}
+  if(!WA_CONFIG.adminHp){toast('Isi nomor WA admin dulu!');return;}
+  if(statusEl) statusEl.textContent = '⏳ Mengirim test...';
+  const pesan = '✅ *Test Notif Ojek Kite*\n\nKoneksi Fonnte berhasil! Notifikasi order akan masuk ke nomor ini.\n\n👉 https://ojekkite.pages.dev';
+  const ok = await kirimFonnte(WA_CONFIG.adminHp, pesan);
+  if(statusEl){
+    statusEl.textContent = ok ? '✅ Berhasil! Cek WA kamu.' : '❌ Gagal. Cek token & nomor HP.';
+    statusEl.style.color = ok ? '#10B981' : '#EF4444';
+  }
+}
+
 // ===== ENTER APP =====
 async function enterApp(){
   showLd(true);await loadData();loadTarif();loadPayConfig();loadPromos();loadZona();showLd(false);
@@ -5008,6 +5246,7 @@ function aTab(t,btn){
   if(t==='promo'){renderAdminPromoList();}
   if(t==='zona'){renderWilayahList();getAllKelSelect('tf-kel-dari');getAllKelSelect('tf-kel-ke');getAllKecSelect('tf-kec-dari');getAllKecSelect('tf-kec-ke');}
   if(t==='daftar'){setTimeout(()=>{populateKecamatan('rn-kec',onRnKecChange);},100);}
+  if(t==='notif-wa'){setTimeout(renderWAConfigUI,100);}
 }
 
 // GPS handled by getGPSAsal() in map block above
@@ -5197,6 +5436,84 @@ async function hapusRider(rid, nama){
     }catch(e){toast('Gagal hapus: '+e.message);return;}
   }
   renderDB();renderARiders();renderAll();toast(nama+' berhasil dihapus!');
+}
+
+
+// ===== TUGASKAN VIA WHATSAPP =====
+let _waOrderId = null;
+
+function buatPesanWA(order, rider){
+  const tipe = TLBL[order.type]||order.type;
+  const asal = order.kecAsalNama||order.from||'—';
+  const tujuan = order.kecTujuanNama||order.to||'—';
+  const alamat = order.bto?'\n📌 '+order.bto:'';
+  const harga = order.totalTagihan||order.hargaZona||0;
+  const bayar = order.metodeBayar==='qris'?'📱 QRIS':'💵 Tunai';
+  const nama = rider?'Halo '+rider.nama+', ada':'Ada';
+
+  return `${nama} order baru untuk kamu!\n\n`+
+    `${tipe}\n`+
+    `📍 ${asal} → ${tujuan}${alamat}\n`+
+    `💰 ${fmtRp(harga)} · ${bayar}\n`+
+    `👤 ${order.buyerNama} · ${order.buyerHp}\n\n`+
+    `Segera buka app Ojek Kite:\n`+
+    `👉 https://ojekkite.pages.dev`;
+}
+
+// Opsi A: Pilih rider dulu (untuk order belum ada rider)
+function tugaskanViaWA(oid){
+  _waOrderId = oid;
+  const o = ORDERS.find(x=>x.id===oid); if(!o) return;
+  const infoEl = document.getElementById('wa-order-info');
+  const listEl = document.getElementById('wa-rider-list');
+
+  if(infoEl){
+    infoEl.innerHTML = `<strong>${TLBL[o.type]||o.type}</strong> · ${o.kecAsalNama||o.from} → ${o.kecTujuanNama||o.to}<br>
+    👤 ${o.buyerNama} · 💰 ${fmtRp(o.totalTagihan||o.hargaZona||0)}`;
+  }
+
+  // Tampilkan rider online
+  const riders = RIDERS.filter(r=>r.status==='aktif');
+  if(!riders.length){
+    if(listEl) listEl.innerHTML='<div style="font-size:12px;color:var(--t2);padding:8px">Belum ada rider aktif</div>';
+  } else {
+    if(listEl) listEl.innerHTML = riders.map(r=>{
+      const avg = avgR(r.ratings||[]);
+      const hp = formatHP(r.hp||'');
+      return`<div class="wa-rider-item" onclick="kirimWARider('${oid}','${r.id}')">
+        <div class="wri-av">${r.inisial}</div>
+        <div class="wri-info">
+          <div class="wri-nama">${r.nama} · ${r.nopol}</div>
+          <div class="wri-zona">${r.zonaKelNama?r.zonaKelNama+', '+r.zonaKecNama:'—'} · ${r.statusOnline?'🟢 Online':'⚫ Offline'}</div>
+          <div class="wri-hp">${r.hp||'—'}</div>
+        </div>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.116 1.524 5.843L0 24l6.324-1.501A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.368l-.36-.214-3.732.885.916-3.618-.235-.373A9.818 9.818 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182S21.818 6.58 21.818 12 17.42 21.818 12 21.818z"/></svg>
+      </div>`;
+    }).join('');
+  }
+  openM('mwaassign');
+}
+
+function kirimWARider(oid, rid){
+  const o = ORDERS.find(x=>x.id===oid);
+  const r = RIDERS.find(x=>x.id===rid);
+  if(!o||!r) return;
+  const hp = formatHP(r.hp||'');
+  if(!hp){toast('Nomor HP rider tidak valid!');return;}
+  const msg = buatPesanWA(o, r);
+  window.open('https://wa.me/'+hp+'?text='+encodeURIComponent(msg), '_blank');
+  closeM('mwaassign');
+  toast('WhatsApp dibuka untuk '+r.nama);
+}
+
+// Opsi B: Langsung WA ke rider yang sudah ditugaskan
+function waRiderLangsung(oid){
+  const o = ORDERS.find(x=>x.id===oid); if(!o) return;
+  const r = RIDERS.find(x=>x.id===o.assignedRiderId); if(!r){toast('Data rider tidak ditemukan');return;}
+  const hp = formatHP(r.hp||'');
+  if(!hp){toast('Nomor HP rider tidak valid!');return;}
+  const msg = buatPesanWA(o, r);
+  window.open('https://wa.me/'+hp+'?text='+encodeURIComponent(msg), '_blank');
 }
 
 // ===== ADMIN BATALKAN =====
@@ -5720,11 +6037,15 @@ function renderAOrders(){
 
         <!-- TOMBOL TINDAKAN — hanya untuk yang belum diambil rider -->
         ${belumAda?`
-        <!-- Belum ada rider: Tugaskan + Chat Buyer + Batalkan -->
+        <!-- Belum ada rider: Tugaskan + WA + Chat Buyer + Batalkan -->
         <div class="admin-action-bar">
           <button class="btn-admin-tugaskan" onclick="adminAssign('${o.id}')">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></svg>
-            Tugaskan Rider
+            Tugaskan di App
+          </button>
+          <button class="btn-wa" onclick="tugaskanViaWA('${o.id}')">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.116 1.524 5.843L0 24l6.324-1.501A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.368l-.36-.214-3.732.885.916-3.618-.235-.373A9.818 9.818 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182S21.818 6.58 21.818 12 17.42 21.818 12 21.818z"/></svg>
+            via WA
           </button>
         </div>
         <div class="admin-action-bar" style="margin-top:0">
@@ -5737,13 +6058,18 @@ function renderAOrders(){
             Batalkan
           </button>
         </div>`:`
-        <!-- Sudah ada rider: Chat Buyer + Lihat Chat -->
+        <!-- Sudah ada rider: Chat Buyer + WA Rider + Lihat Chat -->
         <div class="admin-action-bar" style="margin-top:8px">
           <button class="btn bo bsm" style="flex:1;justify-content:center;border-radius:10px;padding:9px" onclick="adminChatBuyer('${o.id}')">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
             Chat Buyer
           </button>
-          ${o.assignedRiderId?`<button class="btn bo bsm" style="flex:1;justify-content:center;border-radius:10px;padding:9px" onclick="openChat('${o.id}','admin')">
+          ${o.assignedRiderId?`
+          <button class="btn-wa" style="flex:1" onclick="waRiderLangsung('${o.id}')">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.116 1.524 5.843L0 24l6.324-1.501A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.368l-.36-.214-3.732.885.916-3.618-.235-.373A9.818 9.818 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182S21.818 6.58 21.818 12 17.42 21.818 12 21.818z"/></svg>
+            WA Rider
+          </button>
+          <button class="btn bo bsm" style="flex:1;justify-content:center;border-radius:10px;padding:9px" onclick="openChat('${o.id}','admin')">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
             Lihat Chat
           </button>`:''}
@@ -6139,7 +6465,7 @@ window.addEventListener('load',()=>{
   if(!WILAYAH||!WILAYAH.length)WILAYAH=[...WILAYAH_DEFAULT];
   if(!TARIF_KEL||!TARIF_KEL.length)TARIF_KEL=[...TARIF_KEL_DEFAULT];
   if(!TARIF_KEC||!TARIF_KEC.length)TARIF_KEC=[...TARIF_KEC_DEFAULT];
-  loadTarif();loadTarifMobil();
+  loadTarif();loadTarifMobil();loadWAConfig();
   showLd(false);showA('sl');fillZona();
   setTimeout(initAllHPInputs, 500);
 });
